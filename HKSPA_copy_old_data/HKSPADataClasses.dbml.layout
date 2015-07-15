@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 17" name="HKSPADataClasses">
+  <DataContextMoniker Name="/HKSPADataClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="64a87a2f-7ee8-44af-b08f-a80a2e388c64" absoluteBounds="0.875, 0.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/view_Category" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5ac5f22c-b18c-4bbb-8d45-4e5535d887b6" absoluteBounds="0.89000000000000012, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="132a974a-f5db-4d20-9e53-585e2449c066" absoluteBounds="3.75, 0.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/old_album" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6a923ed4-5aca-4ab9-b712-dcaa535cba4a" absoluteBounds="3.7649999999999997, 0.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9de8bde7-14b2-4e18-a31f-e2eb1bbd7862" absoluteBounds="3.75, 2.125, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/AlbumName" />
+      <nestedChildShapes>
+        <elementListCompartment Id="84852e18-af67-479e-9068-3775da1241df" absoluteBounds="3.7649999999999997, 2.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a0cb65aa-c5b6-444b-9199-e7d74e606c7d" absoluteBounds="1, 3.625, 2, 3.1170068359375">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/Album" />
+      <nestedChildShapes>
+        <elementListCompartment Id="92b4753a-4f11-47b5-ad4f-f2fc14a842c1" absoluteBounds="1.0150000000000001, 4.085, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c4f11ea2-9a88-42f4-98b5-cef44605d094" absoluteBounds="1, 7.5, 2, 2.5401025390625">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/AlbumPhoto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a1e44dd5-62c2-46bc-a445-d49742941663" absoluteBounds="1.0150000000000001, 7.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3402c59c-d9f5-4d17-94d7-f1f178ba0581" absoluteBounds="4.375, 7.5, 2, 3.6939111328124996">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/AlbumPhoto_info" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8824c750-1e67-4466-ad80-5002523a695a" absoluteBounds="4.39, 7.96, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c67ed526-dad8-41ca-ba5f-84a5b0ec7c03" absoluteBounds="3.75, 4.25, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/AlbumCategory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f967610e-6e4e-4da9-ac80-de788e3a7a8c" absoluteBounds="3.7649999999999997, 4.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cb863425-134d-4c28-b30f-a503ee09ec89" absoluteBounds="1.125, 10.625, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/old_album_photo_record" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f34122d5-4145-4c05-8e11-f2bd1779d4e0" absoluteBounds="1.1400000000000001, 11.085, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1e281a3e-15df-4a05-8e46-31e2c7bdf7f4" absoluteBounds="4.25, 11.75, 2, 5.0400211588541657">
+      <DataClassMoniker Name="/HKSPADataClassesDataContext/view_AlbumPhotoInfo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6ba7adfb-649a-432b-b27d-9a042c2cabfe" absoluteBounds="4.265, 12.21, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

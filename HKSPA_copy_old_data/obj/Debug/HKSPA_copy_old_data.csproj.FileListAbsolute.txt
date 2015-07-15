@@ -1,0 +1,24 @@
+C:\Users\Administrator\AppData\Local\Temporary Projects\HKSPA_copy_old_data\bin\Debug\HKSPA_copy_old_data.exe.config
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HKSPA_copy_old_data.exe.config
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.csproj.App.config
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.csprojResolveAssemblyReference.cache
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.Form1.resources
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.Properties.Resources.resources
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.csproj.GenerateResource.Cache
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HKSPA_copy_old_data.exe
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HKSPA_copy_old_data.pdb
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HtmlAgilityPack.dll
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\MySql.Data.dll
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\System.Net.Http.Extensions.dll
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\System.Net.Http.Primitives.dll
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HtmlAgilityPack.pdb
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HtmlAgilityPack.xml
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\System.Net.Http.Extensions.xml
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\System.Net.Http.Primitives.xml
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.exe
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.pdb
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\EXIFextractor.dll
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HKSPA_copy_old_data.exe.manifest
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\bin\Debug\HKSPA_copy_old_data.application
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.exe.manifest
+D:\Project\hkspa\HKSPA_Copy_Data\HKSPA_copy_old_data\HKSPA_copy_old_data\obj\Debug\HKSPA_copy_old_data.application
