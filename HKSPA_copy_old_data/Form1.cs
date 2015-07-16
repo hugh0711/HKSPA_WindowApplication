@@ -147,321 +147,333 @@ namespace HKSPA_copy_old_data
                     skip_id.Add(2194, 2194);//2194	Ball Games	ball	Volleyball	volleyball	02-05 Nov 2003 -<br> 2nd Asian Schools Volleyball Championship (Boys) 2003	20031202-05	46	089	Fanling	Nikon D1H	640	419
 
                     skip_id.Add(2696, 2696);//Image Damage
-                    
-                    //later check ID < 58521
-                    IQueryable<old_album_photo_record> photo_records = from d in HKSPA_ms_db.old_album_photo_records
-                                                                        select d;
 
 
-                    //foreach (DataRow photo_row in dt_album_view.Rows)
-                    foreach (old_album_photo_record photo_row in photo_records)
+                    int counter = 0;
+                    string line;
+
+                    string[] errorIDList = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "Error_ID.txt")); // relative path
+
+                    for (int i = 0; i <= errorIDList.Length; i+=1000)
                     {
-                        string filename = "";
 
-                        string author = "";
-
-                        string camera_model = "";
-
-                        //int photo_sortOrder = Convert.ToInt32(photo_row["FileNo"]);
-
-                        //string photo_sortOrder_string = photo_row["FileNo"].ToString();
-
-                        //string sub_category_name=photo_row["sub_CategoryName"].ToString();
-
-                        //if (photo_row["FileName"] != null & photo_row["FileName"].ToString().Length > 0)
-                        //{
-                        //    author = photo_row["FileName"].ToString();
-                        //}
-
-                        //if (photo_row["FileCam"] != null & photo_row["FileCam"].ToString().Length > 0)
-                        //{
-                        //    camera_model = photo_row["FileCam"].ToString();
-                        //}
-
-                        int photo_sortOrder = Convert.ToInt32(photo_row.FileNo);
-
-                        string photo_sortOrder_string = photo_row.FileNo;
-
-                        string sub_category_name = photo_row.sub_CategoryName;
-
-                        if (photo_row.fileName != null & photo_row.fileName.ToString().Length > 0)
-                        {
-                            author = photo_row.fileName;
-                        }
-
-                        if (photo_row.FileCam != null & photo_row.FileCam.ToString().Length > 0)
-                        {
-                            camera_model = photo_row.FileCam.ToString();
-                        }
+                        //later check ID < 58521
+                        IQueryable<old_album_photo_record> photo_records = (from d in HKSPA_ms_db.old_album_photo_records
+                                                                            where errorIDList.Skip(i).Take(i + 1000).Contains(d.ID.ToString())
+                                                                            select d);
 
 
-
-                        if (author != "" & author.Length > 0 & camera_model != "" & camera_model.Length > 0)
-                        {
-                            
-                            filename = string.Format("_{0}_{1}", author, camera_model);
-                        }
-
-                        //http://www.hkspa.org/Gallery/ball/Tennis/2008010205/001_Down%20Ka%20Sing_Canon%20EOS-1D%20II.jpg
-                        //string photo_url = string.Format("http://www.hkspa.org/Gallery/{0}/{1}/{2}/{3}{4}.jpg", photo_row["Cate_FolderName"], photo_row["Sub_FolderName"], photo_row["Album_FolderName"], photo_row["FileNo"], filename);
-
-
-                        //string album_folder_name = photo_row["Album_FolderName"].ToString();
-
-                        //string sub_folderName = photo_row["Sub_FolderName"].ToString();
-
-                        //string cate_folderName = photo_row["Cate_FolderName"].ToString();
-
-                        //int albumID = Convert.ToInt32(photo_row["AlbumID"]);
-
-                        //string chinese_album_name = AlbumID_AlbumName[albumID].ToString();
-
-                        //string eng_album_name = photo_row["album_name"].ToString();
-
-                        string album_folder_name = photo_row.Album_FolderName;
-
-                        string sub_folderName = photo_row.Sub_FolderName;
-
-                        string cate_folderName = photo_row.Cate_FolderName;
-
-                        int albumID = Convert.ToInt32(photo_row.AlbumID);
-
-                        string chinese_album_name = AlbumID_AlbumName[albumID].ToString().Replace("<br>","");
-
-                        string eng_album_name = photo_row.album_name.Replace("<br>", "");
-
-                        rowID = Convert.ToInt32(photo_row.ID);
-
-                        
-                        //string photo_url = string.Format(@"c:\test_album\{0}\{1}\{2}\{3}{4}.jpg", cate_folderName, sub_folderName, album_folder_name, photo_sortOrder_string, filename);
-                        string photo_url = string.Format(@"c:\website\HKSPA_old_2\web\Gallery\{0}\{1}\{2}\{3}{4}.jpg", cate_folderName, sub_folderName, album_folder_name, photo_sortOrder_string, filename);
-
-
-                        //get album name from web
-                        //Dim album_name = GetAlbumName(photo_row("AlbumID"))
-
-                        //context.Response.Write(String.Format("{0}<br />", album_name))
-
-
-                        //album_result &= String.Format("album_name: {0}<br />", AlbumID_AlbumName.Values(photo_row["AlbumID"]));
-
-                        //album_result &= String.Format("photo_url: <a href='{0}'>{0}</a><br />", photo_url)
-
-
-                        Guid found_albumID = (from d in HKSPA_ms_db.AlbumNames
-                                                 where d.AlbumName1 == chinese_album_name
-                                                 && d.Lang == "zh-hk"
-                                                 select d.AlbumID).FirstOrDefault();
-
-                        //run if album not in DB
-                        if (found_albumID.ToString() == "00000000-0000-0000-0000-000000000000")
+                        //foreach (DataRow photo_row in dt_album_view.Rows)
+                        foreach (old_album_photo_record photo_row in photo_records)
                         {
 
-                            string albumDate;
-                            DateTime the_albumDate;
 
-                            if (special_album_foldername.ContainsKey(album_folder_name))
-                            {
-                                the_albumDate = special_album_foldername[album_folder_name];
-                            }
-                            else
-                            {
-                                albumDate = album_folder_name.Substring(0, 8);
-                                the_albumDate = StringToDatetime(albumDate);
-                            }
+                            string filename = "";
 
-                            Guid new_AlbumID = Guid.NewGuid();
+                            string author = "";
 
-                            //<----------------------------Insert new album-------------------------->
-                            Album new_album = new Album
-                            {
-                                AlbumID = new_AlbumID,
-                                AlbumName = chinese_album_name,
-                                Description = chinese_album_name,
-                                PhotoCount = 0,
-                                Enabled = true,
-                                SortOrder = 0,
-                                AlbumDate=new DateTime(the_albumDate.Year, the_albumDate.Month, the_albumDate.Day),
-                                CreateDate = DateTime.Now,
-                                CreatedBy = "admin",
-                                UpdateDate = DateTime.Now,
-                                UpdatedBy = "admin"
-                            };
+                            string camera_model = "";
 
-                            // Add the new object to the Orders collection.
-                            HKSPA_ms_db.Albums.InsertOnSubmit(new_album);
+                            //int photo_sortOrder = Convert.ToInt32(photo_row["FileNo"]);
 
-                            // Submit the change to the database. 
-                            try
-                            {
-                                HKSPA_ms_db.SubmitChanges();
-                            }
-                            catch (Exception e)
-                            {
-                                txt_result.Text += string.Format("[New Album]Error of {0}. RowID: {1} \r\n", e.Message.ToString(),rowID);
-                                // Make some adjustments. 
-                                // ... 
-                                // Try again.
-                                HKSPA_ms_db.SubmitChanges();
-                            }
+                            //string photo_sortOrder_string = photo_row["FileNo"].ToString();
 
+                            //string sub_category_name=photo_row["sub_CategoryName"].ToString();
 
-                            //<----------------------------Insert new chinese album name -------------------------->
-                            AlbumName new_chinese_album_name = new AlbumName
-                            {
-                                AlbumID = new_AlbumID,
-                                AlbumName1 = chinese_album_name,
-                                Description = chinese_album_name,
-                                Lang = "zh-hk"
-                            };
-
-                            // Add the new object to the Orders collection.
-                            HKSPA_ms_db.AlbumNames.InsertOnSubmit(new_chinese_album_name);
-
-                            // Submit the change to the database. 
-                            try
-                            {
-                                HKSPA_ms_db.SubmitChanges();
-                            }
-                            catch (Exception e)
-                            {
-                                txt_result.Text += string.Format("[Insert Chinese Album Name]Error of {0}. RowID: {1} \r\n", e.Message.ToString(), rowID);
-                                // Make some adjustments. 
-                                // ... 
-                                // Try again.
-                                HKSPA_ms_db.SubmitChanges();
-                            }
-
-
-                            //<----------------------------Insert new eng album name -------------------------->
-                            AlbumName new_eng_album_name = new AlbumName
-                            {
-                                AlbumID = new_AlbumID,
-                                AlbumName1 = eng_album_name,
-                                Description = eng_album_name,
-                                Lang = "en-us"
-                            };
-
-                            // Add the new object to the Orders collection.
-                            HKSPA_ms_db.AlbumNames.InsertOnSubmit(new_eng_album_name);
-
-                            // Submit the change to the database. 
-                            try
-                            {
-                                HKSPA_ms_db.SubmitChanges();
-                            }
-                            catch (Exception e)
-                            {
-                                txt_result.Text += string.Format("[Insert Eng Album Name] Error of {0}. RowID: {1} \r\n", e.Message.ToString(), rowID);
-                                // Make some adjustments. 
-                                // ... 
-                                // Try again.
-                                HKSPA_ms_db.SubmitChanges();
-                            }
-
-                            sub_category_name = sub_category_name.Replace("!V", "–");
-
-                            //<----------------------------Map AlbumID and Category ID -------------------------->
-                            int found_category_ID = (from s in secondLevel_CategoryID_CategoryName
-                                                  where s.Value.ToString().ToLower()== sub_category_name.ToLower()   
-                                                      select s.Key).First();
-
-                            AlbumCategory new_AlbumCategory_Mapping = new AlbumCategory
-                            {
-                                AlbumID = new_AlbumID,
-                                CategoryID = found_category_ID
-                            };
-
-                            // Add the new object to the Orders collection.
-                            HKSPA_ms_db.AlbumCategories.InsertOnSubmit(new_AlbumCategory_Mapping);
-
-                            // Submit the change to the database. 
-                            try
-                            {
-                                HKSPA_ms_db.SubmitChanges();
-                            }
-                            catch (Exception e)
-                            {
-                                txt_result.Text += string.Format("[Map AlbumID and Category ID]Error of {0}. RowID: {1} \r\n", e.Message.ToString(), rowID);
-                                // Make some adjustments. 
-                                // ... 
-                                // Try again.
-                                HKSPA_ms_db.SubmitChanges();
-                            }
-
-                            //set album ID for copy photo
-                            found_albumID = new_AlbumID;
-
-                            ////create album folder
-                            //string new_album_folder = string.Format(@"{0}\{1}",new_album_path, found_albumID);
-
-                            //bool isExists = System.IO.Directory.Exists(new_album_folder);
-
-                            //if (!isExists)
+                            //if (photo_row["FileName"] != null & photo_row["FileName"].ToString().Length > 0)
                             //{
-                            //    System.IO.Directory.CreateDirectory(new_album_folder);
+                            //    author = photo_row["FileName"].ToString();
                             //}
-                            
 
-                            ////create album Thumbnail folder
-                            //string new_album_tb_folder = string.Format(@"{0}\tb", new_album_folder, found_albumID);
-
-                            //isExists = System.IO.Directory.Exists(new_album_tb_folder);
-
-                            //if (!isExists)
+                            //if (photo_row["FileCam"] != null & photo_row["FileCam"].ToString().Length > 0)
                             //{
-                            //    System.IO.Directory.CreateDirectory(new_album_tb_folder);
+                            //    camera_model = photo_row["FileCam"].ToString();
                             //}
-                        }
 
-                        //create album folder
-                        string new_album_folder = string.Format(@"{0}\{1}", new_album_path, found_albumID);
+                            int photo_sortOrder = Convert.ToInt32(photo_row.FileNo);
 
-                        bool isExists = System.IO.Directory.Exists(new_album_folder);
+                            string photo_sortOrder_string = photo_row.FileNo;
 
-                        if (!isExists)
-                        {
-                            System.IO.Directory.CreateDirectory(new_album_folder);
-                        }
+                            string sub_category_name = photo_row.sub_CategoryName;
 
-
-                        //create album Thumbnail folder
-                        string new_album_tb_folder = string.Format(@"{0}\tb", new_album_folder, found_albumID);
-
-                        isExists = System.IO.Directory.Exists(new_album_tb_folder);
-
-                        if (!isExists)
-                        {
-                            System.IO.Directory.CreateDirectory(new_album_tb_folder);
-                        }
-
-
-
-                        int photo_found = (from d in HKSPA_ms_db.view_AlbumPhotoInfos
-                                           where d.Lang == "en-us" && d.AlbumID == found_albumID
-                                           && d.SortOrder == photo_sortOrder
-                                           select d).Count();
-
-                        if (photo_found == 0)
-                        {
-                            if (!skip_id.ContainsKey(rowID))
+                            if (photo_row.fileName != null & photo_row.fileName.ToString().Length > 0)
                             {
-                                if (File.Exists(photo_url))
+                                author = photo_row.fileName;
+                            }
+
+                            if (photo_row.FileCam != null & photo_row.FileCam.ToString().Length > 0)
+                            {
+                                camera_model = photo_row.FileCam.ToString();
+                            }
+
+
+
+                            if (author != "" & author.Length > 0 & camera_model != "" & camera_model.Length > 0)
+                            {
+
+                                filename = string.Format("_{0}_{1}", author, camera_model);
+                            }
+
+                            //http://www.hkspa.org/Gallery/ball/Tennis/2008010205/001_Down%20Ka%20Sing_Canon%20EOS-1D%20II.jpg
+                            //string photo_url = string.Format("http://www.hkspa.org/Gallery/{0}/{1}/{2}/{3}{4}.jpg", photo_row["Cate_FolderName"], photo_row["Sub_FolderName"], photo_row["Album_FolderName"], photo_row["FileNo"], filename);
+
+
+                            //string album_folder_name = photo_row["Album_FolderName"].ToString();
+
+                            //string sub_folderName = photo_row["Sub_FolderName"].ToString();
+
+                            //string cate_folderName = photo_row["Cate_FolderName"].ToString();
+
+                            //int albumID = Convert.ToInt32(photo_row["AlbumID"]);
+
+                            //string chinese_album_name = AlbumID_AlbumName[albumID].ToString();
+
+                            //string eng_album_name = photo_row["album_name"].ToString();
+
+                            string album_folder_name = photo_row.Album_FolderName;
+
+                            string sub_folderName = photo_row.Sub_FolderName;
+
+                            string cate_folderName = photo_row.Cate_FolderName;
+
+                            int albumID = Convert.ToInt32(photo_row.AlbumID);
+
+                            string chinese_album_name = AlbumID_AlbumName[albumID].ToString().Replace("<br>", "");
+
+                            string eng_album_name = photo_row.album_name.Replace("<br>", "");
+
+                            rowID = Convert.ToInt32(photo_row.ID);
+
+
+                            //string photo_url = string.Format(@"c:\test_album\{0}\{1}\{2}\{3}{4}.jpg", cate_folderName, sub_folderName, album_folder_name, photo_sortOrder_string, filename);
+                            string photo_url = string.Format(@"c:\website\HKSPA_old_2\web\Gallery\{0}\{1}\{2}\{3}{4}.jpg", cate_folderName, sub_folderName, album_folder_name, photo_sortOrder_string, filename);
+
+
+                            //get album name from web
+                            //Dim album_name = GetAlbumName(photo_row("AlbumID"))
+
+                            //context.Response.Write(String.Format("{0}<br />", album_name))
+
+
+                            //album_result &= String.Format("album_name: {0}<br />", AlbumID_AlbumName.Values(photo_row["AlbumID"]));
+
+                            //album_result &= String.Format("photo_url: <a href='{0}'>{0}</a><br />", photo_url)
+
+
+                            Guid found_albumID = (from d in HKSPA_ms_db.AlbumNames
+                                                  where d.AlbumName1 == chinese_album_name
+                                                  && d.Lang == "zh-hk"
+                                                  select d.AlbumID).FirstOrDefault();
+
+                            //run if album not in DB
+                            if (found_albumID.ToString() == "00000000-0000-0000-0000-000000000000")
+                            {
+
+                                string albumDate;
+                                DateTime the_albumDate;
+
+                                if (special_album_foldername.ContainsKey(album_folder_name))
                                 {
-                                    CopyPhoto_FromOldAlbum_ToNewAlbum(photo_url, found_albumID, photo_sortOrder, author, camera_model);
+                                    the_albumDate = special_album_foldername[album_folder_name];
                                 }
                                 else
                                 {
-                                    txt_result.Text += string.Format("File Not Exist! RowID: {0} \r\n", rowID);
+                                    albumDate = album_folder_name.Substring(0, 8);
+                                    the_albumDate = StringToDatetime(albumDate);
                                 }
+
+                                Guid new_AlbumID = Guid.NewGuid();
+
+                                //<----------------------------Insert new album-------------------------->
+                                Album new_album = new Album
+                                {
+                                    AlbumID = new_AlbumID,
+                                    AlbumName = chinese_album_name,
+                                    Description = chinese_album_name,
+                                    PhotoCount = 0,
+                                    Enabled = true,
+                                    SortOrder = 0,
+                                    AlbumDate = new DateTime(the_albumDate.Year, the_albumDate.Month, the_albumDate.Day),
+                                    CreateDate = DateTime.Now,
+                                    CreatedBy = "admin",
+                                    UpdateDate = DateTime.Now,
+                                    UpdatedBy = "admin"
+                                };
+
+                                // Add the new object to the Orders collection.
+                                HKSPA_ms_db.Albums.InsertOnSubmit(new_album);
+
+                                // Submit the change to the database. 
+                                try
+                                {
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+                                catch (Exception e)
+                                {
+                                    txt_result.Text += string.Format("[New Album]Error of {0}. RowID: {1} \r\n", e.Message.ToString(), rowID);
+                                    // Make some adjustments. 
+                                    // ... 
+                                    // Try again.
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+
+
+                                //<----------------------------Insert new chinese album name -------------------------->
+                                AlbumName new_chinese_album_name = new AlbumName
+                                {
+                                    AlbumID = new_AlbumID,
+                                    AlbumName1 = chinese_album_name,
+                                    Description = chinese_album_name,
+                                    Lang = "zh-hk"
+                                };
+
+                                // Add the new object to the Orders collection.
+                                HKSPA_ms_db.AlbumNames.InsertOnSubmit(new_chinese_album_name);
+
+                                // Submit the change to the database. 
+                                try
+                                {
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+                                catch (Exception e)
+                                {
+                                    txt_result.Text += string.Format("[Insert Chinese Album Name]Error of {0}. RowID: {1} \r\n", e.Message.ToString(), rowID);
+                                    // Make some adjustments. 
+                                    // ... 
+                                    // Try again.
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+
+
+                                //<----------------------------Insert new eng album name -------------------------->
+                                AlbumName new_eng_album_name = new AlbumName
+                                {
+                                    AlbumID = new_AlbumID,
+                                    AlbumName1 = eng_album_name,
+                                    Description = eng_album_name,
+                                    Lang = "en-us"
+                                };
+
+                                // Add the new object to the Orders collection.
+                                HKSPA_ms_db.AlbumNames.InsertOnSubmit(new_eng_album_name);
+
+                                // Submit the change to the database. 
+                                try
+                                {
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+                                catch (Exception e)
+                                {
+                                    txt_result.Text += string.Format("[Insert Eng Album Name] Error of {0}. RowID: {1} \r\n", e.Message.ToString(), rowID);
+                                    // Make some adjustments. 
+                                    // ... 
+                                    // Try again.
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+
+                                sub_category_name = sub_category_name.Replace("!V", "–");
+
+                                //<----------------------------Map AlbumID and Category ID -------------------------->
+                                int found_category_ID = (from s in secondLevel_CategoryID_CategoryName
+                                                         where s.Value.ToString().ToLower() == sub_category_name.ToLower()
+                                                         select s.Key).First();
+
+                                AlbumCategory new_AlbumCategory_Mapping = new AlbumCategory
+                                {
+                                    AlbumID = new_AlbumID,
+                                    CategoryID = found_category_ID
+                                };
+
+                                // Add the new object to the Orders collection.
+                                HKSPA_ms_db.AlbumCategories.InsertOnSubmit(new_AlbumCategory_Mapping);
+
+                                // Submit the change to the database. 
+                                try
+                                {
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+                                catch (Exception e)
+                                {
+                                    txt_result.Text += string.Format("[Map AlbumID and Category ID]Error of {0}. RowID: {1} \r\n", e.Message.ToString(), rowID);
+                                    // Make some adjustments. 
+                                    // ... 
+                                    // Try again.
+                                    HKSPA_ms_db.SubmitChanges();
+                                }
+
+                                //set album ID for copy photo
+                                found_albumID = new_AlbumID;
+
+                                ////create album folder
+                                //string new_album_folder = string.Format(@"{0}\{1}",new_album_path, found_albumID);
+
+                                //bool isExists = System.IO.Directory.Exists(new_album_folder);
+
+                                //if (!isExists)
+                                //{
+                                //    System.IO.Directory.CreateDirectory(new_album_folder);
+                                //}
+
+
+                                ////create album Thumbnail folder
+                                //string new_album_tb_folder = string.Format(@"{0}\tb", new_album_folder, found_albumID);
+
+                                //isExists = System.IO.Directory.Exists(new_album_tb_folder);
+
+                                //if (!isExists)
+                                //{
+                                //    System.IO.Directory.CreateDirectory(new_album_tb_folder);
+                                //}
                             }
-                            
 
+                            //create album folder
+                            string new_album_folder = string.Format(@"{0}\{1}", new_album_path, found_albumID);
+
+                            bool isExists = System.IO.Directory.Exists(new_album_folder);
+
+                            if (!isExists)
+                            {
+                                System.IO.Directory.CreateDirectory(new_album_folder);
+                            }
+
+
+                            //create album Thumbnail folder
+                            string new_album_tb_folder = string.Format(@"{0}\tb", new_album_folder, found_albumID);
+
+                            isExists = System.IO.Directory.Exists(new_album_tb_folder);
+
+                            if (!isExists)
+                            {
+                                System.IO.Directory.CreateDirectory(new_album_tb_folder);
+                            }
+
+
+
+                            int photo_found = (from d in HKSPA_ms_db.view_AlbumPhotoInfos
+                                               where d.Lang == "en-us" && d.AlbumID == found_albumID
+                                               && d.SortOrder == photo_sortOrder
+                                               select d).Count();
+
+                            if (photo_found == 0)
+                            {
+                                if (!skip_id.ContainsKey(rowID))
+                                {
+                                    if (File.Exists(photo_url))
+                                    {
+                                        CopyPhoto_FromOldAlbum_ToNewAlbum(photo_url, found_albumID, photo_sortOrder, author, camera_model);
+                                    }
+                                    else
+                                    {
+                                        txt_result.Text += string.Format("File Not Exist! RowID: {0} \r\n", rowID);
+                                    }
+                                }
+
+
+                            }
+
+                            //txt_result.Text += string.Format("Finish copy for {0} \r\n", photo_url);
                         }
-
-                        //txt_result.Text += string.Format("Finish copy for {0} \r\n", photo_url);
                     }
-
                     //lbl_test.Text = album_result
                     //txt_result.Text += string.Format("Finish of {0} - {1} records \r\n", limit_from, limit_to);
 
