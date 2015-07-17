@@ -41,6 +41,7 @@ namespace HKSPA_copy_old_data
         //string new_album_path = @"D:\Project\hkspa\20131211\HKSPA\product_image\album";
         string new_album_path = @"C:\website\HKSPA\product_image\album";
 
+
         int rowID;
 
         public Form1()
@@ -153,15 +154,14 @@ namespace HKSPA_copy_old_data
                     string line;
 
                     string[] errorIDList = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "Error_ID.txt")); // relative path
-
-                    for (int i = 0; i <= errorIDList.Length; i+=1000)
-                    {
+                    int skipNumber = 100;
+                    //for (int i = 0; i <= errorIDList.Length; i += skipNumber)
+                    //{
 
                         //later check ID < 58521
                         IQueryable<old_album_photo_record> photo_records = (from d in HKSPA_ms_db.old_album_photo_records
-                                                                            where errorIDList.Skip(i).Take(i + 1000).Contains(d.ID.ToString())
+                                                                            where d.ID == 161770
                                                                             select d);
-
 
                         //foreach (DataRow photo_row in dt_album_view.Rows)
                         foreach (old_album_photo_record photo_row in photo_records)
@@ -461,6 +461,8 @@ namespace HKSPA_copy_old_data
                                     if (File.Exists(photo_url))
                                     {
                                         CopyPhoto_FromOldAlbum_ToNewAlbum(photo_url, found_albumID, photo_sortOrder, author, camera_model);
+                                        txt_result.Text += string.Format("Finish copy for {0} \r\n", rowID);
+
                                     }
                                     else
                                     {
@@ -470,10 +472,10 @@ namespace HKSPA_copy_old_data
 
 
                             }
-
-                            //txt_result.Text += string.Format("Finish copy for {0} \r\n", photo_url);
                         }
-                    }
+
+                    //}
+
                     //lbl_test.Text = album_result
                     //txt_result.Text += string.Format("Finish of {0} - {1} records \r\n", limit_from, limit_to);
 
@@ -534,7 +536,6 @@ namespace HKSPA_copy_old_data
             }
 
             System.IO.File.Copy(old_photo_url, copyTo_path);
-
 
             //using (FileStream fs = new FileStream(old_photo_url,  FileMode.Open, FileAccess.ReadWrite))
             //{
@@ -1458,7 +1459,7 @@ namespace HKSPA_copy_old_data
             }
 
 
-            getPhotoDetail(Convert.ToInt32(lbl_limitFrom.Text), Convert.ToInt32(lbl_limitTo.Text));
+           // getPhotoDetail(Convert.ToInt32(lbl_limitFrom.Text), Convert.ToInt32(lbl_limitTo.Text));
 
 
 
@@ -1466,11 +1467,48 @@ namespace HKSPA_copy_old_data
             //tmr_copyData.Tick += new EventHandler(tmr_copyData_Tick);
             //tmr_copyData.Start();
 
+            txt_result.Text = "Start";
+
+            Dictionary<string, DateTime> special_album_foldername = new Dictionary<string, DateTime>();
+            Dictionary<int, int> skip_id = new Dictionary<int, int>();
+            special_album_foldername.Add("2003athletics", new DateTime(2013, 12, 24, 0, 0, 0));
+            special_album_foldername.Add("2003badminton", new DateTime(2013, 12, 24, 0, 0, 0));
+            special_album_foldername.Add("2003boccia", new DateTime(2013, 12, 24, 0, 0, 0));
+            special_album_foldername.Add("2003swimming", new DateTime(2013, 12, 24, 0, 0, 0));
+            special_album_foldername.Add("2003table tennis", new DateTime(2013, 12, 24, 0, 0, 0));
+            special_album_foldername.Add("200510", new DateTime(2005, 10, 01, 0, 0, 0));
+            special_album_foldername.Add("200511", new DateTime(2005, 11, 01, 0, 0, 0));
+            special_album_foldername.Add("200512_200601", new DateTime(2005, 12, 01, 0, 0, 0));
+            special_album_foldername.Add("200601-05", new DateTime(2006, 01, 01, 0, 0, 0));
+            special_album_foldername.Add("201209", new DateTime(2012, 09, 01, 0, 0, 0));
+            special_album_foldername.Add("201210", new DateTime(2012, 10, 01, 0, 0, 0));
+            special_album_foldername.Add("201211", new DateTime(2012, 11, 01, 0, 0, 0));
+            special_album_foldername.Add("201212", new DateTime(2012, 12, 01, 0, 0, 0));
 
 
+            skip_id.Add(2191, 2191); //2191	Ball Games	ball	Volleyball	volleyball	02-05 Nov 2003 -<br> 2nd Asian Schools Volleyball Championship (Boys) 2003	20031202-05	46	086	Fanling	Nikon D1H	419	640
+            skip_id.Add(2192, 2192);//2192	Ball Games	ball	Volleyball	volleyball	02-05 Nov 2003 -<br> 2nd Asian Schools Volleyball Championship (Boys) 2003	20031202-05	46	087	Fanling	Nikon D1H	640	419
+            skip_id.Add(2193, 2193);//2193	Ball Games	ball	Volleyball	volleyball	02-05 Nov 2003 -<br> 2nd Asian Schools Volleyball Championship (Boys) 2003	20031202-05	46	088	Fanling	Nikon D1H	640	419
+            skip_id.Add(2194, 2194);//2194	Ball Games	ball	Volleyball	volleyball	02-05 Nov 2003 -<br> 2nd Asian Schools Volleyball Championship (Boys) 2003	20031202-05	46	089	Fanling	Nikon D1H	640	419
 
+            skip_id.Add(2696, 2696);//Image Damage
 
+            local_MainCategory[0] = 23;
+            local_MainCategory[1] = 80;
+            local_MainCategory[2] = 76;
+            local_MainCategory[3] = 9;
+            local_MainCategory[4] = 13;
+            local_MainCategory[5] = 8;
+            local_MainCategory[6] = 47;
+            local_MainCategory[7] = 52;
+            local_MainCategory[8] = 66;
 
+            GetPhotoDetail longTest = new GetPhotoDetail(secondLevel_CategoryID_CategoryName, AlbumID_AlbumName, special_album_foldername, skip_id, local_MainCategory);
+            System.Threading.Thread backgroundThread =
+                new System.Threading.Thread(new System.Threading.ThreadStart(longTest.RunLoop));
+            backgroundThread.Name = "BackgroundThread";
+            backgroundThread.IsBackground = true;
+            backgroundThread.Start();
 
 
         }
